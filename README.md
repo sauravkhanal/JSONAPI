@@ -37,3 +37,5 @@ Effortlessly retrieve data from the API with a straightforward:
 - Make a GET request to the API endpoint at `https://json.paudelrohan.com.np/api/json/{name_of_your_json_document}`.
 
 ## Example
+
+
