@@ -37,3 +37,22 @@ Effortlessly retrieve data from the API with a straightforward:
 - Make a GET request to the API endpoint at `https://json.paudelrohan.com.np/api/json/{name_of_your_json_document}`.
 
 ## Example
+
+I named the JSON file 'BookJson' and uploaded it with details about various books. The content of the JSON file includes information on different books such as 'The Great Gatsby,' 'To Kill a Mockingbird,' '1984,' and 'The Hobbit.' This data has been successfully uploaded using the 'BookJson' file.
+
+> [!TIP]
+> Below is a screenshot of the completed task.
+
+![Sample Screenshot](examplesample.png)
+
+After I've uploaded my JSON file, named 'BookJson', I can easily retrieve the data. Simply make a GET request to the following API endpoint:
+
+```plaintext
+https://json.paudelrohan.com.np/api/json/BookJson
+```
+
+## How to Contribute
+
+We welcome contributions from the community! Whether it's bug fixes, new features, or improvements, feel free to fork the repository, make your changes, and submit a pull request. Together, let's make this project even better!
+
+Feel the freedom to explore and enhance your development and testing workflows with our project. Thank you for being a part of our community!
