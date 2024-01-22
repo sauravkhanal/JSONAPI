@@ -38,4 +38,10 @@ Effortlessly retrieve data from the API with a straightforward:
 
 ## Example
 
+I named the JSON file 'BookJson' and uploaded it with details about various books. The content of the JSON file includes information on different books such as 'The Great Gatsby,' 'To Kill a Mockingbird,' '1984,' and 'The Hobbit.' This data has been successfully uploaded using the 'BookJson' file.
+
+> [!TIP]
+> Below is a screenshot of the completed task.
+
+![Sample Screenshot](examplesample.png)
 
