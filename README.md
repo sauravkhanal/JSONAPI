@@ -45,3 +45,7 @@ I named the JSON file 'BookJson' and uploaded it with details about various book
 
 ![Sample Screenshot](examplesample.png)
 
+After I've uploaded my JSON file, named 'BookJson', I can easily retrieve the data. Simply make a GET request to the following API endpoint:
+
+```plaintext
+https://json.paudelrohan.com.np/api/json/BookJson
