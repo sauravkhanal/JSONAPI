@@ -8,9 +8,6 @@ _Developed by Saurav Khanal and Rohan Paudel_
 Welcome to our open-source project, a dynamic and user-friendly solution crafted with the powerful combination of ReactJS in the frontend and Dotnet in the backend. Our mission is to provide a seamless platform for hosting user JSON files on a server, tailored to meet the needs of developers and testers alike.
 
 ## Key Features
-- **ReactJS Frontend:** Unleash a responsive and engaging user interface with the flexibility and efficiency of ReactJS, enhancing the overall user experience.
-
-- **Dotnet Backend:** Harness the reliability and scalability of Dotnet for a robust backend infrastructure, ensuring seamless performance and efficient handling of data.
 
 - **Free for Everyone:** Our commitment to the community extends to offering this service free of charge for a lifetime. Enjoy unrestricted access and utilize the platform without any cost barriers.
 
