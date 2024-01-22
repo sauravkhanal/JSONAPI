@@ -24,3 +24,16 @@ Welcome to our open-source project, a dynamic and user-friendly solution crafted
 Engaging with our service is a straightforward process, and its adaptability makes it suitable for a myriad of applications. Explore the effortless ways you can make the most of our service:
 
 ### 1. Effortless JSON Hosting
+
+Experience seamless JSON document hosting through our user-friendly web interface with just a few simple steps:
+- Visit [https://json.paudelrohan.com.np](https://json.paudelrohan.com.np).
+- Under the "Name" section, assign a name to your JSON document.
+- Under the "JSON" section, paste the JSON content.
+- Click the "Submit" button.
+
+### 2. Retrieving API Data
+
+Effortlessly retrieve data from the API with a straightforward:
+- Make a GET request to the API endpoint at `https://json.paudelrohan.com.np/api/json/{name_of_your_json_document}`.
+
+## Example
