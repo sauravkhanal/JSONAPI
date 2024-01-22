@@ -16,3 +16,6 @@ Welcome to our open-source project, a dynamic and user-friendly solution crafted
 
 - **No Hit Count Limits:** Enjoy the freedom of unlimited usage with no restrictions on hit counts. Use the platform without any limitations on the number of requests.
 
+- **No Need to Sign In:** Experience hassle-free access with no mandatory sign-in requirements. Benefit from the service without the need for user authentication.
+
+
