@@ -10,7 +10,11 @@ import getSampleJson from '../modules/getSampleJson';
 // apply className dynamically in tailwind
 import classNames from 'classnames';
 import validateName from '../modules/validateName';
+
+import { ClipLoader } from 'react-spinners';
+
 function BodyRight() {
+    const [loading, setLoading] = useState(false);
 
     const [response, setResponse] = useState({
         statusCode: 200,
@@ -39,7 +43,7 @@ function BodyRight() {
         'border-green-500': response.statusCode === 200,
         'border-yellow-500': response.statusCode === 400,
         'border-red-500': response.statusCode !== 200 && response.statusCode !== 400,
-      })
+    })
 
 
     //react hook form
@@ -62,15 +66,19 @@ function BodyRight() {
     }
 
     const onSubmit = async (data) => {
+        setLoading(true)
         const res = await handleRequest({ ...data })
         setResponse({ ...res })
+        setLoading(false)
         // console.log(res)
 
     }
 
     const loadSample = async () => {
+        setLoading(true)
         const data = await getSampleJson();
         setValue('json', data)
+        setLoading(false)
     }
 
     return (
@@ -150,6 +158,19 @@ function BodyRight() {
 
                 </div>
             </form>
+
+            {loading && (
+                <div className="fixed top-0 left-0 w-full h-full bg-opacity-50 bg-gray-500 flex justify-center items-center">
+                    <div className="bg-white p-4 rounded-md">
+                        <ClipLoader
+                            size={50}
+                            loading={loading}
+                        />
+                    </div>
+                </div>
+            )}
+
+
         </div>
     )
 }
