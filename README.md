@@ -26,7 +26,7 @@ Engaging with our service is a straightforward process, and its adaptability mak
 ### 1. Effortless JSON Hosting
 
 Experience seamless JSON document hosting through our user-friendly web interface with just a few simple steps:
-- Visit [https://json.paudelrohan.com.np](https://json.paudelrohan.com.np).
+- Visit [https://json.gorkhacloud.com](https://json.gorkhacloud.com).
 - Under the "Name" section, assign a name to your JSON document.
 - Under the "JSON" section, paste the JSON content.
 - Click the "Submit" button.
@@ -34,7 +34,7 @@ Experience seamless JSON document hosting through our user-friendly web interfac
 ### 2. Retrieving API Data
 
 Effortlessly retrieve data from the API with a straightforward:
-- Make a GET request to the API endpoint at `https://json.paudelrohan.com.np/api/json/{name_of_your_json_document}`.
+- Make a GET request to the API endpoint at `https://json.gorkhacloud.com/api/json/{name_of_your_json_document}`.
 
 ## Example
 
@@ -48,7 +48,7 @@ I named the JSON file 'BookJson' and uploaded it with details about various book
 After I've uploaded my JSON file, named 'BookJson', I can easily retrieve the data. Simply make a GET request to the following API endpoint:
 
 ```plaintext
-https://json.paudelrohan.com.np/api/json/BookJson
+https://json.gorkhacloud.com/api/json/BookJson
 ```
 
 ## How to Contribute
