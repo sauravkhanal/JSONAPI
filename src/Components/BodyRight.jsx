@@ -100,7 +100,7 @@ function BodyRight() {
                             validate: validateName
                         })}
                     />
-                    <p className='text-red-700 min-h-4 text-sm'>{errors.name?.message}</p>
+                    <p className='text-red-700 min-h-5 text-sm'>{errors.name?.message}</p>
                 </label>
                 <label htmlFor='json' className='flex flex-col font-medium '>JSON
                     <textarea
@@ -115,7 +115,7 @@ function BodyRight() {
                             required: "Json is required"
                         })}
                     />
-                    <p className='text-red-700 min-h-4 text-sm'>{errors.json?.message}</p>
+                    <p className='text-red-700 min-h-5 text-sm'>{errors.json?.message}</p>
                 </label>
 
                 <div
