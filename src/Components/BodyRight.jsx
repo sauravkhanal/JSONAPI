@@ -7,6 +7,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import getSampleJson from '../modules/getSampleJson';
 
+// apply className dynamically in tailwind
+import classNames from 'classnames';
 function BodyRight() {
 
     const [response, setResponse] = useState({
@@ -30,6 +32,13 @@ function BodyRight() {
                 toast.error(response.message)
         }
     }, [response])
+
+    //configure color or url bar border based on response
+    const borderColorClass = classNames({
+        'border-green-500': response.statusCode === 200,
+        'border-yellow-500': response.statusCode === 400,
+        'border-red-500': response.statusCode !== 200 && response.statusCode !== 400,
+      })
 
     const [textAreaValue, setTextAreaValue] = useState('') // to get sample
 
@@ -134,8 +143,8 @@ function BodyRight() {
 
                 {/* URL bar */}
                 <div
-                    className='px-2 py-2 border bg-gray-900 text-white rounded-lg flex items-center gap-5 self-center max-w-full'
-                    title={response.statusCode == 200 && 'click me to copy link '}
+                    className={`px-2 py-2 border bg-gray-900 text-white rounded-lg flex items-center gap-5 self-center max-w-full ${borderColorClass}`}
+                    title={response.statusCode == 200 ? 'click me to copy link ' : ''}
                 >
                     <p className='overflow-hidden' onClick={copyToClipboard}>
                         {
