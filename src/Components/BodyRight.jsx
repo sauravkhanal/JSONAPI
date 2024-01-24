@@ -40,11 +40,9 @@ function BodyRight() {
         'border-red-500': response.statusCode !== 200 && response.statusCode !== 400,
       })
 
-    const [textAreaValue, setTextAreaValue] = useState('') // to get sample
-
 
     //react hook form
-    const { register, handleSubmit, formState } = useForm();
+    const { register, handleSubmit, formState, reset, setValue } = useForm();
     const { errors } = formState;
     const validateName = (value) => {
         const startsWithLetter = /^[a-zA-Z]/;
@@ -101,7 +99,7 @@ function BodyRight() {
 
     const loadSample = async () => {
         const data = await getSampleJson();
-        setTextAreaValue(data)
+        setValue('json', data)
     }
 
     return (
@@ -133,7 +131,6 @@ function BodyRight() {
                         id='json'
                         className='resize-none rounded-md p-1 font-normal bg-gray-200 focus:bg-white'
                         formNoValidate
-                        defaultValue={textAreaValue && textAreaValue}
                         {...register("json", {
                             required: "Json is required"
                         })}
@@ -165,8 +162,8 @@ function BodyRight() {
                         </>
                     }
                 </div>
+                
                 <div className='flex space-x-5 justify-center'>
-
 
                     <button onClick={handleSubmit}
                         className='rounded-md bg-black text-white px-5 py-1 active:bg-gray-700 text-xl '
