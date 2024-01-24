@@ -1,1 +1,1 @@
-export const API_ENDPOINT = "https://json.paudelrohan.com.np/api/JSON/addJson"
+export const API_ENDPOINT = "https://json.gorkhacloud.com/api/JSON/addJson"
