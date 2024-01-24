@@ -67,10 +67,42 @@ function BodyRight() {
 
     const onSubmit = async (data) => {
         setLoading(true)
-        const res = await handleRequest({ ...data })
-        setResponse({ ...res })
-        setLoading(false)
-        // console.log(res)
+
+        // Create an AbortController to abort the fetch request if it takes too long
+        const controller = new AbortController();
+
+        // set timeout for 15s
+
+        const timeout = setTimeout(() => {
+            controller.abort();
+            setResponse({
+                statusCode: 500,
+                message: "Request timed out",
+                data: {}
+            });
+            setLoading(false);
+        }, 15000)
+
+        try {
+            const res = await handleRequest({ ...data })
+            setResponse({ ...res })
+
+        } catch (error) {
+
+            if (error.name === 'AbortError')
+                console.log("Fetch aborted due to timeout")
+            else {
+                console.error('Fetch error:', error);
+                setResponse({
+                    statusCode: 500,
+                    message: "An error occurred during the request",
+                    data: {}
+                });
+            }
+        } finally {
+            clearTimeout(timeout)
+            setLoading(false)
+        }
 
     }
 
@@ -161,12 +193,12 @@ function BodyRight() {
 
             {loading && (
                 <div className="fixed top-0 left-0 w-full h-full bg-opacity-50 bg-gray-500 flex justify-center items-center">
-                    <div className="bg-white p-4 rounded-md">
+                    {/* <div className="bg-white p-4 rounded-md"> */}
                         <ClipLoader
                             size={50}
                             loading={loading}
                         />
-                    </div>
+                    {/* </div> */}
                 </div>
             )}
 
