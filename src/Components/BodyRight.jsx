@@ -106,12 +106,13 @@ function BodyRight() {
                     <div
                         ref={urlRef}
                         onClick={copyToClipboard}
-                        className='px-2 py-2 border bg-gray-900 text-white rounded-lg flex items-center gap-5'
+                        className='px-2 py-2 border bg-gray-900 text-white rounded-lg flex items-center gap-5 self-center max-w-full'
+                        title='click me to copy link'
                     > 
-                    <p className='overflow-hidden'>
+                    <p className='overflow-hidden' >
                         {response.responseOk ? response.responseMessage.split(' ').pop() : "https://json.gorkhacloud.com/api/json/userDetails"}</p>
                         <FaRegCopy size={24} className='hover:text-green-400 active:text-green-800' />
-                        <FaExternalLinkAlt size={24} onClick={()=> window.open(response.responseMessage.split(' ').pop(),"_blank")} className='hover:text-green-400 active:text-green-800' />
+                        <FaExternalLinkAlt title="open url in new tab" size={22} onClick={()=> window.open(response.responseMessage.split(' ').pop(),"_blank")} className='hover:text-green-400 active:text-green-800' />
                         
                         </div>
                     :
