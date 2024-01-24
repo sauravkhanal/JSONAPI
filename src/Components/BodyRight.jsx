@@ -70,15 +70,16 @@ function BodyRight() {
     };
 
     const copyToClipboard = async () => {
-        navigator.clipboard.writeText(urlRef.current.innerText)
-            .then(() => {
-                console.log("URL copied to clipboard")
-                toast.success("URL copied on clipboard")
-            })
-            .catch(error => {
-                toast.error("Unable to copy to clipboard")
-                console.error('Unable to copy to clipboard: ', error);
-            });
+        if (response.statusCode == 200)
+            navigator.clipboard.writeText(urlRef.current.innerText)
+                .then(() => {
+                    console.log("URL copied to clipboard")
+                    toast.success("URL copied on clipboard")
+                })
+                .catch(error => {
+                    toast.error("Unable to copy to clipboard")
+                    console.error('Unable to copy to clipboard: ', error);
+                });
 
     }
 
@@ -134,7 +135,7 @@ function BodyRight() {
                 {/* URL bar */}
                 <div
                     className='px-2 py-2 border bg-gray-900 text-white rounded-lg flex items-center gap-5 self-center max-w-full'
-                    title='click me to copy link '
+                    title={response.statusCode == 200 && 'click me to copy link '}
                 >
                     <p className='overflow-hidden' onClick={copyToClipboard}>
                         {
