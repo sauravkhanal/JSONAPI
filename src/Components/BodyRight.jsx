@@ -11,16 +11,28 @@ function BodyRight() {
 
     const [response, setResponse] = useState({
         statusCode: 200,
-        message: "Json added successfully",
+        message: "Demo Json Loaded successfully",
         data: {
             parsingUrl: "https://json.gorkhacloud.com/api/json/userDetails",
             formattedJson: "{\n  \"test\": \"one\"\n}"
         }
     });
 
-    const [textAreaValue, setTextAreaValue] = useState('')
+    useEffect(() => {
+        switch (response.statusCode) {
+            case 200:
+                toast.success(response.message)
+                break;
+            case 400:
+                toast.warn(response.message)
+                break;
+            default:
+                toast.error(response.message)
+        }
+    }, [response])
 
-    const urlRef = useRef();
+    const [textAreaValue, setTextAreaValue] = useState('') // to get sample
+
 
     //react hook form
     const { register, handleSubmit, formState } = useForm();
@@ -73,7 +85,7 @@ function BodyRight() {
     const onSubmit = async (data) => {
         const res = await handleRequest({ ...data })
         setResponse({ ...res })
-        console.log(res)
+        // console.log(res)
 
     }
 
@@ -102,6 +114,7 @@ function BodyRight() {
                     />
                     <p className='text-red-700 min-h-5 text-sm'>{errors.name?.message}</p>
                 </label>
+
                 <label htmlFor='json' className='flex flex-col font-medium '>JSON
                     <textarea
                         rows={10}
@@ -118,10 +131,10 @@ function BodyRight() {
                     <p className='text-red-700 min-h-5 text-sm'>{errors.json?.message}</p>
                 </label>
 
+                {/* URL bar */}
                 <div
-                    ref={urlRef}
                     className='px-2 py-2 border bg-gray-900 text-white rounded-lg flex items-center gap-5 self-center max-w-full'
-                    title='click me to copy link'
+                    title='click me to copy link '
                 >
                     <p className='overflow-hidden' onClick={copyToClipboard}>
                         {
