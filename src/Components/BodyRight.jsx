@@ -1,14 +1,20 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import handleRequest from '../modules/handleRequest';
-import { FaRegCopy,FaExternalLinkAlt } from "react-icons/fa";
+import { FaRegCopy, FaExternalLinkAlt } from "react-icons/fa";
 import { useForm } from 'react-hook-form';
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import getSampleJson from '../modules/getSampleJson';
 
 function BodyRight() {
 
     const [response, setResponse] = useState({
-        responseMessage:"successfully hosted on https://json.gorkhacloud.com/api/json/userDetails",
+        responseMessage: "successfully hosted on https://json.gorkhacloud.com/api/json/userDetails",
         responseOk: true
     });
+
+    const [textAreaValue, setTextAreaValue] = useState('')
 
     const urlRef = useRef();
 
@@ -18,53 +24,62 @@ function BodyRight() {
     const validateName = (value) => {
         const startsWithLetter = /^[a-zA-Z]/;
         const containsOnlyLettersAndNumbers = /^[a-zA-Z0-9]*$/;
-      
+
         const errorMessages = {
-          required: 'Name is required',
-          minLength: 'Name must be at least 5 characters long',
-          maxLength: 'Name cannot exceed 50 characters',
-          startsWithLetter: 'Name must start with a letter',
-          containsOnlyLettersAndNumbers: 'Name can only contain letters and numbers',
+            required: 'Name is required',
+            minLength: 'Name must be at least 5 characters long',
+            maxLength: 'Name cannot exceed 50 characters',
+            startsWithLetter: 'Name must start with a letter',
+            containsOnlyLettersAndNumbers: 'Name can only contain letters and numbers',
         };
-      
+
         if (!containsOnlyLettersAndNumbers.test(value)) {
-          return errorMessages.containsOnlyLettersAndNumbers;
+            return errorMessages.containsOnlyLettersAndNumbers;
         }
 
         if (!startsWithLetter.test(value)) {
-          return errorMessages.startsWithLetter;
+            return errorMessages.startsWithLetter;
         }
-      
+
         if (value.length < 5) {
-          return errorMessages.minLength;
+            return errorMessages.minLength;
         }
-      
+
         if (value.length > 50) {
-          return errorMessages.maxLength;
+            return errorMessages.maxLength;
         }
-      
-      
+
+
         return true; // Validation passed
-      };
+    };
 
     const copyToClipboard = async () => {
         navigator.clipboard.writeText(urlRef.current.innerText)
             .then(() => {
                 console.log("URL copied to clipboard")
+                toast.success("URL copied on clipboard")
                 // setResponse("URL_successfully_copied_to_clipboard")
                 // setTimeout(() => urlRef.current.innerText = response.split(" ").pop(), 2000)
                 // urlRef.current.innerText = "URL successfully copied to clipboard"
             })
-            .catch(error => console.error('Unable to copy to clipboard: ', error));
+            .catch(error => {
+                toast.error("Unable to copy to clipboard")
+                console.error('Unable to copy to clipboard: ', error);
+            });
         // dialogs.current.close()
     }
 
     const onSubmit = async (data) => {
         const { response, responseOk } = await handleRequest({ ...data })
-        setResponse({responseMessage: response, responseOk:responseOk})
+        setResponse({ responseMessage: response, responseOk: responseOk })
         console.log(response)
         // dialogs.current?.showModal();
         // console.log(data.name)
+    }
+
+    const loadSample = async () => {
+        const data = await getSampleJson();
+        setTextAreaValue(data)
     }
 
     return (
@@ -95,6 +110,7 @@ function BodyRight() {
                         id='json'
                         className='resize-none rounded-md p-1 font-normal bg-gray-200 focus:bg-white'
                         formNoValidate
+                        defaultValue={textAreaValue&& textAreaValue}
                         {...register("json", {
                             required: "Json is required"
                         })}
@@ -108,22 +124,34 @@ function BodyRight() {
                         onClick={copyToClipboard}
                         className='px-2 py-2 border bg-gray-900 text-white rounded-lg flex items-center gap-5 self-center max-w-full'
                         title='click me to copy link'
-                    > 
-                    <p className='overflow-hidden' >
-                        {response.responseOk ? response.responseMessage.split(' ').pop() : "https://json.gorkhacloud.com/api/json/userDetails"}</p>
+                    >
+                        <p className='overflow-hidden' >
+                            {response.responseOk ? response.responseMessage.split(' ').pop() : "https://json.gorkhacloud.com/api/json/userDetails"}</p>
                         <FaRegCopy size={24} className='hover:text-green-400 active:text-green-800' />
-                        <FaExternalLinkAlt title="open url in new tab" size={22} onClick={()=> window.open(response.responseMessage.split(' ').pop(),"_blank")} className='hover:text-green-400 active:text-green-800' />
-                        
-                        </div>
+                        <FaExternalLinkAlt title="open url in new tab" size={22} onClick={() => window.open(response.responseMessage.split(' ').pop(), "_blank")} className='hover:text-green-400 active:text-green-800' />
+
+                    </div>
                     :
                     <p className='flex-grow'>{response}</p>
                 }
 
-                <button onClick={handleSubmit}
-                    className='rounded-md bg-black text-white self-center px-5 py-1 active:bg-gray-700 text-xl '
-                >Submit</button>
-            </form>
+                <div className='flex space-x-5 justify-center'>
 
+
+                    <button onClick={handleSubmit}
+                        className='rounded-md bg-black text-white px-5 py-1 active:bg-gray-700 text-xl '
+                    >
+                        Submit
+                    </button>
+
+                    <button onClick={loadSample}
+                        className='rounded-md bg-black text-white  px-5 py-1 active:bg-gray-700 text-xl '
+                    >
+                        Get Sample Json
+                    </button>
+
+                </div>
+            </form>
         </div>
     )
 }

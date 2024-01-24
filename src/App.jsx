@@ -1,5 +1,6 @@
 import Body from "./Components/Body"
 import Header from "./Components/Header"
+import { ToastContainer} from 'react-toastify';
 
 function App() {
 	return (
@@ -10,6 +11,21 @@ function App() {
 			<div>
 				<Body />
 			</div>
+			<ToastContainer
+				position="top-right"
+				autoClose={3000}
+				hideProgressBar={false}
+				newestOnTop={false}
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+				theme="light"
+				transition:Bounce
+			/>
+
+			<ToastContainer />
 		</section>
 	)
 }
