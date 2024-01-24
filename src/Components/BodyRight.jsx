@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import handleRequest from '../modules/handleRequest';
-import { FaRegCopy } from "react-icons/fa";
+import { FaRegCopy,FaExternalLinkAlt } from "react-icons/fa";
 import { useForm } from 'react-hook-form';
 
 function BodyRight() {
@@ -10,7 +10,6 @@ function BodyRight() {
         responseOk: true
     });
 
-    const dialogs = useRef();
     const urlRef = useRef();
 
     //react hook form
@@ -86,7 +85,7 @@ function BodyRight() {
                             validate: validateName
                         })}
                     />
-                    <p className='text-red-700 min-h-6 text-sm'>{errors.name?.message}</p>
+                    <p className='text-red-700 min-h-4 text-sm'>{errors.name?.message}</p>
                 </label>
                 <label htmlFor='json' className='flex flex-col font-medium '>JSON
                     <textarea
@@ -100,7 +99,7 @@ function BodyRight() {
                             required: "Json is required"
                         })}
                     />
-                    <p className='text-red-700 min-h-6 text-sm'>{errors.json?.message}</p>
+                    <p className='text-red-700 min-h-4 text-sm'>{errors.json?.message}</p>
                 </label>
 
                 {response.responseOk ?
@@ -109,28 +108,20 @@ function BodyRight() {
                         onClick={copyToClipboard}
                         className='px-2 py-2 border bg-gray-900 text-white rounded-lg flex items-center gap-5'
                     > 
-                    <p className='overflow-hidden'>{response.responseOk ? response.responseMessage.split(' ').pop() : "https://json.gorkhacloud.com/api/json/userDetails"}</p><FaRegCopy size={30} className='hover:text-green-400 active:text-green-800' /></div>
+                    <p className='overflow-hidden'>
+                        {response.responseOk ? response.responseMessage.split(' ').pop() : "https://json.gorkhacloud.com/api/json/userDetails"}</p>
+                        <FaRegCopy size={24} className='hover:text-green-400 active:text-green-800' />
+                        <FaExternalLinkAlt size={24} onClick={()=> window.open(response.responseMessage.split(' ').pop(),"_blank")} className='hover:text-green-400 active:text-green-800' />
+                        
+                        </div>
                     :
                     <p className='flex-grow'>{response}</p>
                 }
+
                 <button onClick={handleSubmit}
                     className='rounded-md bg-black text-white self-center px-5 py-1 active:bg-gray-700 text-xl '
                 >Submit</button>
             </form>
-
-            <dialog ref={dialogs} className='overflow-hidden bg-transparent backdrop-blur-3xl'>
-                <div className='rounded-md bg-amber-100 min-w-96 min-h-48 border border-black border-solid flex flex-col justify-center items-center overflow-hidden p-5'>
-
-
-
-
-                    <form method="dialog" className='my-3' >
-                        <button className='rounded-md bg-black text-white self-center px-5 py-1 active:bg-gray-700 text-xl '>OK</button>
-                    </form>
-                </div>
-            </dialog>
-
-
 
         </div>
     )
