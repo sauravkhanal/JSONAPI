@@ -13,20 +13,23 @@ async function handleRequest(data) {
             body: JSON.stringify(data)
         }
         )
-        if (!response.ok) {
-            const status = response.status;
-            if (status == 400) {
-                const responseMessage = await response.text()
-                // console.log(`response json: ${responseMessage}`)
-                return {response: responseMessage, responseOk:false}
-            }
-            const statusText = response.statusText
-            throw new Error(`HTTP error! Status: ${status} - ${statusText}`)
-        }
+        // if (!response.ok) {
+        //     const status = response.status;
+        //     if (status == 400) {
+        //         const responseMessage = await response.text()
+        //         // console.log(`response json: ${responseMessage}`)
+        //         return {response: responseMessage, responseOk:false}
+        //     }
+        //     const statusText = response.statusText
+        //     throw new Error(`HTTP error! Status: ${status} - ${statusText}`)
+        // }
 
-        const responseMessage = await response.text()
-        // console.log(`response json: ${responseMessage}`)
-        return { response: responseMessage, responseOk: true }
+        // const responseMessage = await response.text()
+        // // console.log(`response json: ${responseMessage}`)
+        // return { response: responseMessage, responseOk: true }
+
+        const responseMessage = await response.json()
+        return {...responseMessage}
 
     } catch (error) {
         console.error("Couldn't complete request: ", error)

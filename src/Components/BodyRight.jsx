@@ -10,8 +10,12 @@ import getSampleJson from '../modules/getSampleJson';
 function BodyRight() {
 
     const [response, setResponse] = useState({
-        responseMessage: "successfully hosted on https://json.gorkhacloud.com/api/json/userDetails",
-        responseOk: true
+        statusCode: 200,
+        message: "Json added successfully",
+        data: {
+            parsingUrl: "https://json.gorkhacloud.com/api/json/userDetails",
+            formattedJson: "{\n  \"test\": \"one\"\n}"
+        }
     });
 
     const [textAreaValue, setTextAreaValue] = useState('')
@@ -58,23 +62,19 @@ function BodyRight() {
             .then(() => {
                 console.log("URL copied to clipboard")
                 toast.success("URL copied on clipboard")
-                // setResponse("URL_successfully_copied_to_clipboard")
-                // setTimeout(() => urlRef.current.innerText = response.split(" ").pop(), 2000)
-                // urlRef.current.innerText = "URL successfully copied to clipboard"
             })
             .catch(error => {
                 toast.error("Unable to copy to clipboard")
                 console.error('Unable to copy to clipboard: ', error);
             });
-        // dialogs.current.close()
+
     }
 
     const onSubmit = async (data) => {
-        const { response, responseOk } = await handleRequest({ ...data })
-        setResponse({ responseMessage: response, responseOk: responseOk })
-        console.log(response)
-        // dialogs.current?.showModal();
-        // console.log(data.name)
+        const res = await handleRequest({ ...data })
+        setResponse({ ...res })
+        console.log(res)
+
     }
 
     const loadSample = async () => {
@@ -110,7 +110,7 @@ function BodyRight() {
                         id='json'
                         className='resize-none rounded-md p-1 font-normal bg-gray-200 focus:bg-white'
                         formNoValidate
-                        defaultValue={textAreaValue&& textAreaValue}
+                        defaultValue={textAreaValue && textAreaValue}
                         {...register("json", {
                             required: "Json is required"
                         })}
@@ -118,23 +118,30 @@ function BodyRight() {
                     <p className='text-red-700 min-h-4 text-sm'>{errors.json?.message}</p>
                 </label>
 
-                {response.responseOk ?
-                    <div
-                        ref={urlRef}
-                        onClick={copyToClipboard}
-                        className='px-2 py-2 border bg-gray-900 text-white rounded-lg flex items-center gap-5 self-center max-w-full'
-                        title='click me to copy link'
-                    >
-                        <p className='overflow-hidden' >
-                            {response.responseOk ? response.responseMessage.split(' ').pop() : "https://json.gorkhacloud.com/api/json/userDetails"}</p>
-                        <FaRegCopy size={24} className='hover:text-green-400 active:text-green-800' />
-                        <FaExternalLinkAlt title="open url in new tab" size={22} onClick={() => window.open(response.responseMessage.split(' ').pop(), "_blank")} className='hover:text-green-400 active:text-green-800' />
+                <div
+                    ref={urlRef}
+                    className='px-2 py-2 border bg-gray-900 text-white rounded-lg flex items-center gap-5 self-center max-w-full'
+                    title='click me to copy link'
+                >
+                    <p className='overflow-hidden' onClick={copyToClipboard}>
+                        {
+                            response.statusCode == 200 ? response.data.parsingUrl : response.message
+                            // console.log(response.data.parsingUrl)
+                        }
+                    </p>
 
-                    </div>
-                    :
-                    <p className='flex-grow'>{response}</p>
-                }
-
+                    {
+                        response.statusCode == 200 &&
+                        <>
+                            <FaRegCopy
+                                size={24}
+                                onClick={copyToClipboard}
+                                className='hover:text-green-400 active:text-green-800'
+                            />
+                            <FaExternalLinkAlt title="open Url in new tab" size={22} onClick={() => window.open(response.data.parsingUrl, "_blank")} className='hover:text-green-400 active:text-green-800' />
+                        </>
+                    }
+                </div>
                 <div className='flex space-x-5 justify-center'>
 
 
