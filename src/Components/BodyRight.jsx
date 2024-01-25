@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import getSampleJson from '../modules/getSampleJson';
 
 // apply className dynamically in tailwind
-import classNames from 'classnames';
+// import classNames from 'classnames';
 import validateName from '../modules/validateName';
 
 import { ClipLoader } from 'react-spinners';
@@ -39,11 +39,11 @@ function BodyRight() {
     }, [response])
 
     //configure color or url bar border based on response
-    const borderColorClass = classNames({
-        'border-green-500': response.statusCode === 200,
-        'border-yellow-500': response.statusCode === 400,
-        'border-red-500': response.statusCode !== 200 && response.statusCode !== 400,
-    })
+    // const borderColorClass = classNames({
+    //     'border-green-500': response.statusCode === 200,
+    //     'border-yellow-500': response.statusCode === 400,
+    //     'border-red-500': response.statusCode !== 200 && response.statusCode !== 400,
+    // })
 
 
     //react hook form
@@ -151,7 +151,7 @@ function BodyRight() {
 
                 {/* URL bar */}
                 <div
-                    className={`px-2 py-2 border bg-gray-900 text-white rounded-lg flex items-center gap-5 self-center max-w-full ${borderColorClass}`}
+                    className={`px-2 py-2 border bg-gray-900 text-white rounded-lg flex items-center gap-5 self-center max-w-full `}
                     title={response.statusCode == 200 ? 'click me to copy link ' : ''}
                 >
                     <p className='overflow-hidden' onClick={copyToClipboard}>
@@ -176,7 +176,7 @@ function BodyRight() {
 
             </form>
 
-                <div className='flex flex-col items-center gap-5 sm:flex-row sm:justify-center pt-2'>
+                <div className='flex flex-col items-center gap-5 sm:flex-row sm:justify-center pt-5'>
 
                     <button onClick={loadSample}
                         className='rounded-md bg-black text-white  px-5 py-1 active:bg-gray-700 text-xl '
@@ -184,7 +184,7 @@ function BodyRight() {
                         Get Sample Json
                     </button>
 
-                    <button onClick={handleSubmit}
+                    <button onClick={handleSubmit(onSubmit)}
                         className='rounded-md bg-black text-white px-5 py-1 active:bg-gray-700 text-xl '
                     >
                         Submit
