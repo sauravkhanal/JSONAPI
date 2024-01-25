@@ -174,7 +174,13 @@ function BodyRight() {
                     }
                 </div>
 
-                <div className='flex space-x-5 justify-center'>
+                <div className='flex flex-col items-center gap-5 sm:flex-row sm:justify-center pt-2'>
+
+                    <button onClick={loadSample}
+                        className='rounded-md bg-black text-white  px-5 py-1 active:bg-gray-700 text-xl '
+                    >
+                        Get Sample Json
+                    </button>
 
                     <button onClick={handleSubmit}
                         className='rounded-md bg-black text-white px-5 py-1 active:bg-gray-700 text-xl '
@@ -182,11 +188,6 @@ function BodyRight() {
                         Submit
                     </button>
 
-                    <button onClick={loadSample}
-                        className='rounded-md bg-black text-white  px-5 py-1 active:bg-gray-700 text-xl '
-                    >
-                        Get Sample Json
-                    </button>
 
                 </div>
             </form>
