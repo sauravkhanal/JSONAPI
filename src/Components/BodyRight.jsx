@@ -60,7 +60,7 @@ function BodyRight() {
 
     const copyToClipboard = async () => {
         if (response.statusCode == 200)
-            navigator.clipboard.writeText(response.data.parsingUrl)
+            navigator.clipboard.writeText(Url)
                 .then(() => {
                     console.log("URL copied to clipboard")
                     toast.success("URL copied on clipboard")
