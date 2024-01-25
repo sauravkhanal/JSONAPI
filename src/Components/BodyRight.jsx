@@ -114,11 +114,11 @@ function BodyRight() {
     }
 
     return (
-        <div className='bg-gray-500 rounded-l-none p-2 sm:p-5 md:p-7 lg:p-10 w-full h-full flex justify-center items-center'>
+        <div className='bg-gray-500 rounded-l-none p-2 sm:p-5 md:p-7 lg:p-10 w-full h-full flex-col justify-center items-center'>
 
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                className=' flex flex-col w-full h-full space-y-3 '
+                className=' flex flex-col w-full'
             >
 
                 <label htmlFor='name' className='flex flex-col text-lg font-medium invalid:text-red-600'>Name
@@ -174,6 +174,8 @@ function BodyRight() {
                     }
                 </div>
 
+            </form>
+
                 <div className='flex flex-col items-center gap-5 sm:flex-row sm:justify-center pt-2'>
 
                     <button onClick={loadSample}
@@ -188,9 +190,7 @@ function BodyRight() {
                         Submit
                     </button>
 
-
                 </div>
-            </form>
 
             {loading && (
                 <div className="fixed top-0 left-0 w-full h-full bg-opacity-50 bg-gray-500 flex justify-center items-center">
