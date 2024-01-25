@@ -38,9 +38,9 @@ function BodyRight() {
                 break;
             case 400:
                 console.log('case 400');
-                const {name, json} = response.message.fieldError;
-                setError('name', { type: 'manual', message: name || null});
-                setError('json', { type: 'manual', message: json || null});
+                const { name, json } = response.message.fieldError;
+                name && setError('name', { type: 'manual', message: name });
+                json && setError('json', { type: 'manual', message: json });
                 break;
             default:
                 toast.error(response.message.information)
@@ -130,7 +130,7 @@ function BodyRight() {
 
                 <label htmlFor='name' className='flex flex-col text-lg font-medium invalid:text-red-600'>Name
                     <input type='text' placeholder="name" id='name' name='name'
-                        className='rounded-md  p-2 font-normal bg-gray-200 focus:bg-white'
+                        className={`rounded-md  p-2 font-normal bg-gray-200 focus:bg-white ${errors.name && "outline outline-2 outline-red-700 outline-solid"}`}
                         autoComplete='off'
                         formNoValidate
                         {...register("name", {
@@ -147,7 +147,7 @@ function BodyRight() {
                         name='json'
                         placeholder='{"Choose Kindness":"❤️"}'
                         id='json'
-                        className='resize-none rounded-md p-1 font-normal bg-gray-200 focus:bg-white'
+                        className={`resize-none rounded-md p-1 font-normal bg-gray-200 focus:bg-white ${errors.json && "outline outline-2 outline-red-700 outline-solid"}`}
                         formNoValidate
                         {...register("json", {
                             required: "Json is required"
