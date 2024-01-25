@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState, useEffect, useCallback } from 'react'
 import handleRequest from '../modules/handleRequest';
 import { FaRegCopy, FaExternalLinkAlt } from "react-icons/fa";
 import { useForm } from 'react-hook-form';
@@ -15,7 +15,7 @@ import { ClipLoader } from 'react-spinners';
 
 function BodyRight() {
     const [loading, setLoading] = useState(false);
-
+    const [Url, setUrl] = useState('');
     const [response, setResponse] = useState({
         statusCode: 200,
         message: {
@@ -23,7 +23,7 @@ function BodyRight() {
                 name: "Message for Name filed",
                 json: "Message for Json filed",
             },
-            information: "Success message"
+            information: "Loaded successfully"
         },
         data: {
             parsingUrl: "https://json.gorkhacloud.com/api/json/userDetails",
@@ -37,25 +37,24 @@ function BodyRight() {
                 toast.success(response.message.information)
                 break;
             case 400:
-                toast.warn(response.message.fieldError?.name)
-                toast.warn(response.message.fieldError?.message)
+                console.log('case 400');
+                const {name, json} = response.message.fieldError;
+                setError('name', { type: 'manual', message: name || null});
+                setError('json', { type: 'manual', message: json || null});
                 break;
             default:
                 toast.error(response.message.information)
         }
     }, [response])
 
-
-    //configure color or url bar border based on response
-    // const borderColorClass = classNames({
-    //     'border-green-500': response.statusCode === 200,
-    //     'border-yellow-500': response.statusCode === 400,
-    //     'border-red-500': response.statusCode !== 200 && response.statusCode !== 400,
-    // })
-
+    //monitor parsingUrl
+    useEffect(() => {
+        if (response.data !== null)
+            setUrl(response.data.parsingUrl)
+    }, [response.data])
 
     //react hook form
-    const { register, handleSubmit, formState, reset, setValue } = useForm();
+    const { register, handleSubmit, formState, reset, setValue, setError } = useForm();
     const { errors } = formState;
 
 
@@ -94,6 +93,7 @@ function BodyRight() {
         try {
             const res = await handleRequest({ ...data })
             setResponse({ ...res })
+            console.log(res)
         } catch (error) {
 
             if (error.name === 'AbortError')
@@ -138,7 +138,7 @@ function BodyRight() {
                             validate: validateName
                         })}
                     />
-                    <p className='text-red-700 min-h-5 text-sm'>{errors.name?.message}</p>
+                    <p className='text-red-700 min-h-6 text-sm'>{errors.name?.message}</p>
                 </label>
 
                 <label htmlFor='json' className='flex flex-col font-medium '>JSON
@@ -153,59 +153,55 @@ function BodyRight() {
                             required: "Json is required"
                         })}
                     />
-                    <p className='text-red-700 min-h-5 text-sm'>{errors.json?.message}</p>
+                    <p className='text-red-700 min-h-6 text-sm'>{errors.json?.message}</p>
                 </label>
 
                 {/* URL bar */}
                 <div
                     className={`px-2 py-2 border bg-gray-900 text-white rounded-lg flex items-center gap-5 self-center max-w-full `}
-                    title={response.statusCode == 200 ? 'click me to copy link ' : ''}
+                    title='click me to copy link '
                 >
                     <p className='overflow-hidden' onClick={copyToClipboard}>
-                        {
-                            response.statusCode == 200 ? response.data.parsingUrl : response.message.information
-                            // console.log(response.data.parsingUrl)
-                        }
+                        {Url}
                     </p>
+                    <FaRegCopy
+                        size={24}
+                        onClick={copyToClipboard}
+                        className='hover:text-green-400 active:text-green-800'
+                    />
+                    <FaExternalLinkAlt
+                        title="open Url in new tab" size={22}
+                        onClick={() => window.open(Url, "_blank")}
+                        className='hover:text-green-400 active:text-green-800'
+                    />
 
-                    {
-                        response.statusCode == 200 &&
-                        <>
-                            <FaRegCopy
-                                size={24}
-                                onClick={copyToClipboard}
-                                className='hover:text-green-400 active:text-green-800'
-                            />
-                            <FaExternalLinkAlt title="open Url in new tab" size={22} onClick={() => window.open(response.data.parsingUrl, "_blank")} className='hover:text-green-400 active:text-green-800' />
-                        </>
-                    }
                 </div>
 
             </form>
 
-                <div className='flex flex-col items-center gap-5 sm:flex-row sm:justify-center pt-5'>
+            <div className='flex flex-col items-center gap-5 sm:flex-row sm:justify-center pt-5'>
 
-                    <button onClick={loadSample}
-                        className='rounded-md bg-black text-white  px-5 py-1 active:bg-gray-700 text-xl '
-                    >
-                        Get Sample Json
-                    </button>
+                <button onClick={loadSample}
+                    className='rounded-md bg-black text-white  px-5 py-1 active:bg-gray-700 text-xl '
+                >
+                    Get Sample Json
+                </button>
 
-                    <button onClick={handleSubmit(onSubmit)}
-                        className='rounded-md bg-black text-white px-5 py-1 active:bg-gray-700 text-xl '
-                    >
-                        Submit
-                    </button>
+                <button onClick={handleSubmit(onSubmit)}
+                    className='rounded-md bg-black text-white px-5 py-1 active:bg-gray-700 text-xl '
+                >
+                    Submit
+                </button>
 
-                </div>
+            </div>
 
             {loading && (
                 <div className="fixed top-0 left-0 w-full h-full bg-opacity-50 bg-gray-500 flex justify-center items-center">
                     {/* <div className="bg-white p-4 rounded-md"> */}
-                        <ClipLoader
-                            size={50}
-                            loading={loading}
-                        />
+                    <ClipLoader
+                        size={50}
+                        loading={loading}
+                    />
                     {/* </div> */}
                 </div>
             )}
