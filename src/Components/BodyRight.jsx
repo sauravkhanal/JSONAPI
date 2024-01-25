@@ -18,7 +18,13 @@ function BodyRight() {
 
     const [response, setResponse] = useState({
         statusCode: 200,
-        message: "Demo Json Loaded successfully",
+        message: {
+            fieldError: {
+                name: "Message for Name filed",
+                json: "Message for Json filed",
+            },
+            information: "Success message"
+        },
         data: {
             parsingUrl: "https://json.gorkhacloud.com/api/json/userDetails",
             formattedJson: "{\n  \"test\": \"one\"\n}"
@@ -28,15 +34,17 @@ function BodyRight() {
     useEffect(() => {
         switch (response.statusCode) {
             case 200:
-                toast.success(response.message)
+                toast.success(response.message.information)
                 break;
             case 400:
-                toast.warn(response.message)
+                toast.warn(response.message.fieldError?.name)
+                toast.warn(response.message.fieldError?.message)
                 break;
             default:
-                toast.error(response.message)
+                toast.error(response.message.information)
         }
     }, [response])
+
 
     //configure color or url bar border based on response
     // const borderColorClass = classNames({
@@ -86,7 +94,6 @@ function BodyRight() {
         try {
             const res = await handleRequest({ ...data })
             setResponse({ ...res })
-
         } catch (error) {
 
             if (error.name === 'AbortError')
@@ -156,7 +163,7 @@ function BodyRight() {
                 >
                     <p className='overflow-hidden' onClick={copyToClipboard}>
                         {
-                            response.statusCode == 200 ? response.data.parsingUrl : response.message
+                            response.statusCode == 200 ? response.data.parsingUrl : response.message.information
                             // console.log(response.data.parsingUrl)
                         }
                     </p>
