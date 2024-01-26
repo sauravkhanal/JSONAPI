@@ -121,16 +121,16 @@ function BodyRight() {
     }
 
     return (
-        <div className='bg-white rounded-l-none p-2 sm:p-5 md:p-7 lg:p-10 w-full h-full flex-col justify-center items-center'>
+        <div className='bg-white dark:bg-blue-bg rounded-l-none p-2 sm:p-5 md:p-7 lg:p-10 w-full h-full flex-col justify-center items-center'>
 
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 className=' flex flex-col w-full'
             >
 
-                <label htmlFor='name' className='flex flex-col text-lg font-medium '>Name
+                <label htmlFor='name' className='flex flex-col text-lg font-medium dark:text-gray-200 '>Name
                     <input type='text' placeholder="name" id='name' name='name'
-                        className={`rounded-md  p-2 font-normal bg-gray-50 border border-solid border-slate-200 focus:bg-white ${errors.name && "outline outline-2 outline-red-500 outline-solid"}`}
+                        className={`rounded-md  p-2 font-normal bg-gray-50 dark:bg-blue-bg2 dark:border-none border border-solid border-slate-200 focus:bg-white dark:focus:bg-blue-bg3 dark:focus:outline-none ${errors.name && "outline outline-2 outline-red-500 outline-solid"}`}
                         autoComplete='off'
                         formNoValidate
                         {...register("name", {
@@ -141,13 +141,13 @@ function BodyRight() {
                     <p className='text-red-500 min-h-6 text-sm'>{errors.name?.message}</p>
                 </label>
 
-                <label htmlFor='json' className='flex flex-col font-medium '>JSON
+                <label htmlFor='json' className='flex flex-col font-medium dark:text-gray-200'>JSON
                     <textarea
                         rows={10}
                         name='json'
                         placeholder={response.data?.formattedJson}
                         id='json'
-                        className={`resize-none rounded-md p-1 font-normal bg-gray-50 border border-solid border-slate-200 focus:bg-white ${errors.json && "outline outline-2 outline-red-500 outline-solid"}`}
+                        className={`rounded-md  p-2 font-normal bg-gray-50 dark:bg-blue-bg2 dark:border-none border border-solid border-slate-200 focus:bg-white dark:focus:bg-blue-bg3 dark:focus:outline-none ${errors.name && "outline outline-2 outline-red-500 outline-solid"}`}
                         formNoValidate
                         {...register("json", {
                             required: "Json is required"
@@ -158,7 +158,7 @@ function BodyRight() {
 
                 {/* URL bar */}
                 <div
-                    className={`px-2 py-2 border text-black rounded-lg flex items-center gap-5 self-center max-w-full shadow-sm`}
+                    className={`px-2 py-2 border dark:border-none text-black dark:bg-blue-dark dark:text-gray-400 rounded-lg flex items-center gap-5 self-center max-w-full shadow-sm`}
                     title='click me to copy link '
                 >
                     <p className='overflow-hidden' onClick={copyToClipboard}>
