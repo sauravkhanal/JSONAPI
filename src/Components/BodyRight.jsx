@@ -1,10 +1,10 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import handleRequest from '../modules/handleRequest';
 import { FaRegCopy, FaExternalLinkAlt } from "react-icons/fa";
 import { useForm } from 'react-hook-form';
 
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 import getSampleJson from '../modules/getSampleJson';
 
 // apply className dynamically in tailwind
