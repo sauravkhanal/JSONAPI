@@ -2,7 +2,7 @@ import React from 'react'
 
 function BodyLeft() {
 	return (
-    <div className="bg-slate-950 text-white w-full h-full p-2 sm:p-5 md:p-7 lg:p-10 rounded-l-xl flex flex-col justify-center">
+    <div className="bg-blue-50 text-black text-lg  w-full h-full p-2 sm:p-5 md:p-7 lg:p-10 rounded-l-xl flex flex-col justify-center">
       <p>
         Welcome to our open-source project, a dynamic and user-friendly solution
         crafted with the powerful combination of ReactJS in the frontend and

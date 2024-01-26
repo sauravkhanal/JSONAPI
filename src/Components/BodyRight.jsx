@@ -121,16 +121,16 @@ function BodyRight() {
     }
 
     return (
-        <div className='bg-gray-500 rounded-l-none p-2 sm:p-5 md:p-7 lg:p-10 w-full h-full flex-col justify-center items-center'>
+        <div className='bg-white rounded-l-none p-2 sm:p-5 md:p-7 lg:p-10 w-full h-full flex-col justify-center items-center'>
 
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 className=' flex flex-col w-full'
             >
 
-                <label htmlFor='name' className='flex flex-col text-lg font-medium invalid:text-red-600'>Name
+                <label htmlFor='name' className='flex flex-col text-lg font-medium '>Name
                     <input type='text' placeholder="name" id='name' name='name'
-                        className={`rounded-md  p-2 font-normal bg-gray-200 focus:bg-white ${errors.name && "outline outline-2 outline-red-700 outline-solid"}`}
+                        className={`rounded-md  p-2 font-normal bg-gray-50 border border-solid border-slate-200 focus:bg-white ${errors.name && "outline outline-2 outline-red-500 outline-solid"}`}
                         autoComplete='off'
                         formNoValidate
                         {...register("name", {
@@ -138,7 +138,7 @@ function BodyRight() {
                             validate: validateName
                         })}
                     />
-                    <p className='text-red-700 min-h-6 text-sm'>{errors.name?.message}</p>
+                    <p className='text-red-500 min-h-6 text-sm'>{errors.name?.message}</p>
                 </label>
 
                 <label htmlFor='json' className='flex flex-col font-medium '>JSON
@@ -147,18 +147,18 @@ function BodyRight() {
                         name='json'
                         placeholder='{"Choose Kindness":"❤️"}'
                         id='json'
-                        className={`resize-none rounded-md p-1 font-normal bg-gray-200 focus:bg-white ${errors.json && "outline outline-2 outline-red-700 outline-solid"}`}
+                        className={`resize-none rounded-md p-1 font-normal bg-gray-50 border border-solid border-slate-200 focus:bg-white ${errors.json && "outline outline-2 outline-red-500 outline-solid"}`}
                         formNoValidate
                         {...register("json", {
                             required: "Json is required"
                         })}
                     />
-                    <p className='text-red-700 min-h-6 text-sm'>{errors.json?.message}</p>
+                    <p className='text-red-500 min-h-6 text-sm'>{errors.json?.message}</p>
                 </label>
 
                 {/* URL bar */}
                 <div
-                    className={`px-2 py-2 border bg-gray-900 text-white rounded-lg flex items-center gap-5 self-center max-w-full `}
+                    className={`px-2 py-2 border text-black rounded-lg flex items-center gap-5 self-center max-w-full shadow-sm`}
                     title='click me to copy link '
                 >
                     <p className='overflow-hidden' onClick={copyToClipboard}>
@@ -167,12 +167,12 @@ function BodyRight() {
                     <FaRegCopy
                         size={24}
                         onClick={copyToClipboard}
-                        className='hover:text-green-400 active:text-green-800'
+                        className='transition hover:scale-110 hover:text-blue-700 active:scale-95'
                     />
                     <FaExternalLinkAlt
-                        title="open Url in new tab" size={22}
+                        title="open Url in new tab" size={21}
                         onClick={() => window.open(Url, "_blank")}
-                        className='hover:text-green-400 active:text-green-800'
+                        className='transition hover:scale-110 hover:text-blue-700 active:scale-95'
                     />
 
                 </div>
@@ -182,15 +182,19 @@ function BodyRight() {
             <div className='flex flex-col items-center gap-5 sm:flex-row sm:justify-center pt-5'>
 
                 <button onClick={loadSample}
-                    className='rounded-md bg-black text-white  px-5 py-1 active:bg-gray-700 text-xl '
+                    title='Get ready made sample of json'
+                    className='rounded-md bg-blue-600 shadow-sm text-white text-xl px-5 py-1 
+                        transition hover:scale-105 active:bg-blue-500 active:scale-95'
                 >
-                    Get Sample Json
+                    <p className='hover:scale-105 transition select-none'>Get Sample Json</p>
                 </button>
 
                 <button onClick={handleSubmit(onSubmit)}
-                    className='rounded-md bg-black text-white px-5 py-1 active:bg-gray-700 text-xl '
+                    title='submit to get url for your json data'
+                    className='rounded-md bg-blue-600 shadow-sm text-white text-xl px-5 py-1 
+                        transition hover:scale-105 active:bg-blue-500 active:scale-95'
                 >
-                    Submit
+                    <p className='hover:scale-105 transition copy select-none'>Submit</p>
                 </button>
 
             </div>

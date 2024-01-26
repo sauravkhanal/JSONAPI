@@ -1,7 +1,7 @@
 const Header = () => {
     return (
-        <div>
-            <h1 className="text-4xl flex justify-center text-white">JSON API</h1>
+        <div className="flex justify-center">
+            <h1 className="text-4xl text-gray-600  font-bold">JSON API</h1>
         </div>
     )
 }
