@@ -27,7 +27,7 @@ function BodyRight() {
         },
         data: {
             parsingUrl: "https://json.gorkhacloud.com/api/json/userDetails",
-            formattedJson: "{\n  \"test\": \"one\"\n}"
+            formattedJson: "{\n  \"chooseKindness\":  \"❤️\"\n}"
         }
     });
 
@@ -145,7 +145,7 @@ function BodyRight() {
                     <textarea
                         rows={10}
                         name='json'
-                        placeholder='{"Choose Kindness":"❤️"}'
+                        placeholder={response.data?.formattedJson}
                         id='json'
                         className={`resize-none rounded-md p-1 font-normal bg-gray-50 border border-solid border-slate-200 focus:bg-white ${errors.json && "outline outline-2 outline-red-500 outline-solid"}`}
                         formNoValidate
