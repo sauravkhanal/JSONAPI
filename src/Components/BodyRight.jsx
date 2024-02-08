@@ -23,7 +23,7 @@ function BodyRight() {
                 name: "Message for Name filed",
                 json: "Message for Json filed",
             },
-            information: "Loaded successfully"
+            // information: ""
         },
         data: {
             parsingUrl: "https://json.gorkhacloud.com/api/json/userDetails",
