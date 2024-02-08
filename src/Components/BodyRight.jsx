@@ -184,17 +184,17 @@ function BodyRight() {
                 <button onClick={loadSample}
                     title='Get ready made sample of json'
                     className='rounded-md bg-blue-600 shadow-sm text-white text-xl px-5 py-1 
-                        transition hover:scale-105 active:bg-blue-500 active:scale-95'
+                        transition hover:bg-blue-800 active:bg-blue-500 active:scale-95'
                 >
-                    <p className='hover:scale-105 transition select-none'>Get Sample Json</p>
+                    <p className=' select-none'>Get Sample Json</p>
                 </button>
 
                 <button onClick={handleSubmit(onSubmit)}
                     title='submit to get url for your json data'
                     className='rounded-md bg-blue-600 shadow-sm text-white text-xl px-5 py-1 
-                        transition hover:scale-105 active:bg-blue-500 active:scale-95'
+                        transition hover:bg-blue-800 active:bg-blue-500 active:scale-95'
                 >
-                    <p className='hover:scale-105 transition copy select-none'>Submit</p>
+                    <p className=' select-none'>Submit</p>
                 </button>
 
             </div>
