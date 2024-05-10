@@ -4,5 +4,6 @@ dotenv.config();
 
 export default {
 	port: process.env.PORT || 5000,
-	cors: process.env.CORS,
+	cors_options: process.env.CORS_OPTIONS,
+	base_url: process.env.BASE_URL,
 };
