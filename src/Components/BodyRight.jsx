@@ -90,7 +90,7 @@ function BodyRight() {
         }, 15000)
 
         try {
-            const res = await handleRequest({ ...data })
+            const res = await handleRequest(data)
             setResponse({ ...res })
             console.log("print the result")
             console.log(res)

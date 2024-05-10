@@ -11,7 +11,7 @@ const node_path_1 = __importDefault(require("node:path"));
 function storeJson(req, res) {
     const { name, json: jsonData } = req.body;
     try {
-        if (isValidObject(jsonData)) {
+        if (isValidObject(JSON.parse(jsonData))) {
             console.log("inside true");
             const newName = checkAndUpdate(name);
             //store the data
@@ -48,7 +48,10 @@ function saveJson({ newName, jsonData, }) {
     node_fs_1.default.writeFileSync(filePath, JSON.stringify(jsonData));
 }
 function isValidObject(obj) {
-    return typeof obj === "object" && obj !== null;
+    const val = typeof obj === "object" && obj !== null;
+    console.log(obj);
+    console.log("the object is ", val);
+    return val;
 }
 function validateJson(jsonString) {
     try {
@@ -83,7 +86,7 @@ function checkAndUpdate(name) {
     return newName;
 }
 function generateFileURL(name) {
-    return process.env.BASE_URL || "https://json.khanalsaurav.com.np/json/" + name;
+    return (process.env.BASE_URL || "https://json.khanalsaurav.com.np/json/") + name;
 }
 function checkIfFileExists(name) {
     const filePath = node_path_1.default.join(__dirname, "../", "DB", "usedNames.json");
