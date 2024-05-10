@@ -13,7 +13,7 @@ const ApiError_1 = __importDefault(require("./utils/ApiError"));
 const app = (0, express_1.default)();
 // CORS configuration
 const corsOptions = {
-    origin: env_1.default.cors_options, // Change this to a specific origin or array of origins if needed
+    origin: "*", // Change this to a specific origin or array of origins if needed
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     preflightContinue: false,
     optionsSuccessStatus: 204,

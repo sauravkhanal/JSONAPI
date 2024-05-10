@@ -12,7 +12,7 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-  origin: env.cors_options, // Change this to a specific origin or array of origins if needed
+  origin: "*", // Change this to a specific origin or array of origins if needed
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
   optionsSuccessStatus: 204,
