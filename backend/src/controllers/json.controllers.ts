@@ -8,10 +8,9 @@ import path from "node:path"
 export function storeJson(req: Request, res: Response) {
 	const { name, json: jsonData } = req.body;
 
-
 	try {
 
-		if (isValidObject(jsonData)) {
+		if (isValidObject(JSON.parse(jsonData))) {
 			console.log("inside true");
 			const newName = checkAndUpdate(name);
 			//store the data
@@ -60,7 +59,10 @@ function saveJson({
 }
 
 function isValidObject(obj: object) {
-	return typeof obj === "object" && obj !== null;
+	const val =  typeof obj === "object" && obj !== null;
+	console.log(obj)
+	console.log("the object is ", val)
+	return val
 }
 
 function validateJson(jsonString: string): boolean {
@@ -103,7 +105,7 @@ function checkAndUpdate(name: string): string {
 }
 
 function generateFileURL(name: string) {
-	return process.env.BASE_URL || "https://json.khanalsaurav.com.np/json/" + name;
+	return (process.env.BASE_URL || "https://json.khanalsaurav.com.np/json/") + name;
 }
 
 function checkIfFileExists(name: string): boolean {

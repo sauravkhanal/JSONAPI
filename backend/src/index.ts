@@ -28,7 +28,7 @@ app.use((err:any, req:any, res:any, next:any) => {
   if (err instanceof SyntaxError && 'body' in err) {
     // Send a clean error message to the frontend
     return res.status(400).json(
-      new ApiError(400, "Invalid json format", {
+      new ApiError(400, "oops Invalid json format", {
         fieldError: {
           name: "",
           json: err.message,
