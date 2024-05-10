@@ -3,6 +3,7 @@ import fs from "node:fs";
 import env from "../config/env";
 import ApiError from "../utils/ApiError";
 import ApiResponse from "../utils/ApiResponse";
+import path from "node:path"
 
 export function storeJson(req: Request, res: Response) {
 	const { name, json: jsonData } = req.body;
@@ -54,7 +55,8 @@ function saveJson({
 	newName: string;
 	jsonData: object;
 }) {
-	fs.writeFileSync(`./public/json/${newName}.json`, JSON.stringify(jsonData));
+	const filePath = path.resolve(__dirname, "../../", "public", "json", `${newName}.json`)
+	fs.writeFileSync(filePath, JSON.stringify(jsonData));
 }
 
 function isValidObject(obj: object) {
@@ -81,7 +83,8 @@ function validateJson(jsonString: string): boolean {
  * @returns The name of the json data, gives new name if given name already exists.
  */
 function checkAndUpdate(name: string): string {
-	const fileNamesData = fs.readFileSync("src/DB/usedNames.json", "utf-8");
+	const filePath = path.resolve(__dirname, "../", "DB", "usedNames.json")
+	const fileNamesData = fs.readFileSync(filePath, "utf-8");
 	const fileNames: string[] = JSON.parse(fileNamesData);
 	let newName = name;
 
@@ -92,7 +95,7 @@ function checkAndUpdate(name: string): string {
 	}
 	fileNames.push(newName); //may as well keep name in sorted order for easier sorting
 	fs.writeFileSync(
-		"src/DB/usedNames.json",
+		filePath,
 		JSON.stringify(fileNames, null, 2)
 	);
 
@@ -104,7 +107,8 @@ function generateFileURL(name: string) {
 }
 
 function checkIfFileExists(name: string): boolean {
-	const fileNamesData = fs.readFileSync("src/DB/usedNames.json", "utf-8");
+	const filePath = path.join(__dirname, "../", "DB", "usedNames.json")
+	const fileNamesData = fs.readFileSync(filePath, "utf-8");
 	const fileNames: string[] = JSON.parse(fileNamesData);
 	if (fileNames.includes(name)) {
 		return true;
@@ -116,7 +120,8 @@ function checkIfFileExists(name: string): boolean {
 export function getJson(req: Request, res: Response) {
 	const { name } = req.params;
 	if (checkIfFileExists(name)) {
-		const filePath = `./public/json/${name}.json`;
+		const filePath = path.resolve(__dirname, "../../", "public", "json", `${name}.json`)
+		// const filePath = `./public/json/${name}.json`;
 		const file = fs.readFileSync(filePath, "utf-8");
 		const obj = JSON.parse(file);
 		return res.status(200).json(obj);
