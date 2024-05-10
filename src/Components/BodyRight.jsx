@@ -31,7 +31,7 @@ function BodyRight() {
 
     useEffect(() => {
         console.log("inside use effect")
-        switch (response.statusCode) {
+        switch (response?.statusCode) {
             case 200:
                 toast.success(response.message)
                 break;
@@ -41,8 +41,8 @@ function BodyRight() {
                 name && setError('name', { type: 'manual', message: name });
                 json && setError('json', { type: 'manual', message: json });
                 break;
-            default:
-                toast.error(response.message)
+            // default:
+            //     // toast.error(response.message)
         }
     }, [response])
 
