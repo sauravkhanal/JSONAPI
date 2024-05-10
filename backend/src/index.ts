@@ -3,6 +3,7 @@ import env from "./config/env";
 import baseRoute from "./routes/base.routes";
 import cors from "cors";
 import jsonRoutes from "./routes/json.routes";
+import ApiError from "./utils/ApiError";
 
 
 // initialize server
@@ -26,7 +27,14 @@ app.use((err:any, req:any, res:any, next:any) => {
   // Check if the error is related to JSON parsing
   if (err instanceof SyntaxError && 'body' in err) {
     // Send a clean error message to the frontend
-    res.status(400).send({ error: 'Invalid JSON' });
+    return res.status(400).json(
+      new ApiError(400, "Invalid json format", {
+        fieldError: {
+          name: "",
+          json: err.message,
+        },
+      })
+    );
   } else {
     // For other types of errors, pass it to the default error handler
     next(err);

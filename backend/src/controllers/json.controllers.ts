@@ -6,41 +6,41 @@ import ApiResponse from "../utils/ApiResponse";
 
 export function storeJson(req: Request, res: Response) {
 	const { name, json: jsonData } = req.body;
-	console.log("received new request");
 
-    try{
-        const obj = JSON.parse(jsonData)
-    }
-    catch(error: any) {
-        return res.status(400).json(
-			new ApiError(400, "Invalid json format", {
-				fieldError: {
-					name: "",
-					json: error.message,
-				},
-			})
-		);
-    }
 
-	if (isValidObject(JSON.parse(jsonData))) {
-        console.log("inside true")
-		const newName = checkAndUpdate(name);
-		//store the data
-		saveJson({ newName, jsonData });
-		const url = generateFileURL(newName);
-		return res.status(200).json(
-            new ApiResponse(200, "Json hosted successfully!", {
-                parsingUrl: url,
-			})
-		);
-		// generate url for json from public file
-	} else {
-        console.log("inside false")
+	try {
+
+		if (isValidObject(jsonData)) {
+			console.log("inside true");
+			const newName = checkAndUpdate(name);
+			//store the data
+			saveJson({ newName, jsonData });
+			const url = generateFileURL(newName);
+			return res.status(200).json(
+				new ApiResponse(200, "Json hosted successfully!", {
+					parsingUrl: url,
+				})
+			);
+			// generate url for json from public file
+		} else {
+			console.log("inside false");
+			return res.status(400).json(
+				new ApiError(400, "Invalid json format", {
+					fieldError: {
+						name: "",
+						json: "",
+					},
+				})
+			);
+		}
+
+	} catch (error: any) {
+        console.log(error)
 		return res.status(400).json(
 			new ApiError(400, "Invalid json format", {
 				fieldError: {
 					name: "",
-					json: "",
+					json: error.message,
 				},
 			})
 		);
@@ -126,7 +126,6 @@ export function getJson(req: Request, res: Response) {
 			.json(new ApiError(404, "The requested item doesn't exist."));
 	}
 }
-
 
 //TODO:
 // Delete files when number increases
