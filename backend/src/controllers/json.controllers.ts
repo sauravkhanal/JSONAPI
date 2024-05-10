@@ -8,13 +8,14 @@ import path from "node:path"
 export function storeJson(req: Request, res: Response) {
 	const { name, json: jsonData } = req.body;
 
-	try {
 
-		if (isValidObject(JSON.parse(jsonData))) {
+	try {
+		const receivedObject = JSON.parse(jsonData)
+		if (isValidObject(receivedObject)) {
 			console.log("inside true");
 			const newName = checkAndUpdate(name);
 			//store the data
-			saveJson({ newName, jsonData });
+			saveJson({ newName, receivedObject });
 			const url = generateFileURL(newName);
 			return res.status(200).json(
 				new ApiResponse(200, "Json hosted successfully!", {
@@ -49,13 +50,13 @@ export function storeJson(req: Request, res: Response) {
 
 function saveJson({
 	newName,
-	jsonData,
+	receivedObject,
 }: {
 	newName: string;
-	jsonData: object;
+	receivedObject: object;
 }) {
 	const filePath = path.resolve(__dirname, "../../", "public", "json", `${newName}.json`)
-	fs.writeFileSync(filePath, JSON.stringify(jsonData));
+	fs.writeFileSync(filePath, JSON.stringify(receivedObject, null,0));
 }
 
 function isValidObject(obj: object) {
