@@ -17,7 +17,7 @@ function BodyRight() {
     const [loading, setLoading] = useState(false);
     const [Url, setUrl] = useState('');
     const [response, setResponse] = useState({
-        statusCode: 200,
+        statusCode: null,
         message: "",
         data: {
             parsingUrl: "https://json.khanalsaurav.com.np/json/samplejson",
