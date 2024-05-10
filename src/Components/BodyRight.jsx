@@ -18,27 +18,26 @@ function BodyRight() {
     const [Url, setUrl] = useState('');
     const [response, setResponse] = useState({
         statusCode: 200,
-        message: {
+        message: "",
+        data: {
+            parsingUrl: "https://json.gorkhacloud.com/api/json/userDetails",
+            formattedJson: "{\n  \"chooseKindness\":  \"❤️\"\n}",
             fieldError: {
                 name: "Message for Name filed",
                 json: "Message for Json filed",
             },
-            // information: ""
-        },
-        data: {
-            parsingUrl: "https://json.gorkhacloud.com/api/json/userDetails",
-            formattedJson: "{\n  \"chooseKindness\":  \"❤️\"\n}"
         }
     });
 
     useEffect(() => {
+        console.log("inside use effect")
         switch (response.statusCode) {
             case 200:
                 toast.success(response.message.information)
                 break;
             case 400:
                 console.log('case 400');
-                const { name, json } = response.message.fieldError;
+                const { name, json } = response.data.fieldError ?? {name:"" , json: ""};
                 name && setError('name', { type: 'manual', message: name });
                 json && setError('json', { type: 'manual', message: json });
                 break;
@@ -93,6 +92,7 @@ function BodyRight() {
         try {
             const res = await handleRequest({ ...data })
             setResponse({ ...res })
+            console.log("print the result")
             console.log(res)
         } catch (error) {
 

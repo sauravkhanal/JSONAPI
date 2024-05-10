@@ -29,6 +29,7 @@ async function handleRequest(data) {
         // return { response: responseMessage, responseOk: true }
 
         const responseMessage = await response.json()
+        // alert(responseMessage)
         return {...responseMessage}
 
     } catch (error) {
