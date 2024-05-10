@@ -3,44 +3,46 @@ import fs from "node:fs";
 import env from "../config/env";
 import ApiError from "../utils/ApiError";
 import ApiResponse from "../utils/ApiResponse";
+import path from "node:path"
 
 export function storeJson(req: Request, res: Response) {
 	const { name, json: jsonData } = req.body;
-	console.log("received new request");
 
-    try{
-        const obj = JSON.parse(jsonData)
-    }
-    catch(error: any) {
-        return res.status(400).json(
-			new ApiError(400, "Invalid json format", {
-				fieldError: {
-					name: "",
-					json: error.message,
-				},
-			})
-		);
-    }
 
-	if (isValidObject(JSON.parse(jsonData))) {
-        console.log("inside true")
-		const newName = checkAndUpdate(name);
-		//store the data
-		saveJson({ newName, jsonData });
-		const url = generateFileURL(newName);
-		return res.status(200).json(
-            new ApiResponse(200, "Json hosted successfully!", {
-                parsingUrl: url,
-			})
-		);
-		// generate url for json from public file
-	} else {
-        console.log("inside false")
+	try {
+		const receivedObject = JSON.parse(jsonData)
+		if (isValidObject(receivedObject)) {
+			console.log("inside true");
+			const newName = checkAndUpdate(name);
+			//store the data
+			saveJson({ newName, receivedObject });
+			const url = generateFileURL(newName);
+			return res.status(200).json(
+				new ApiResponse(200, "Json hosted successfully!", {
+					parsingUrl: url,
+					formattedJson: receivedObject
+				})
+			);
+			// generate url for json from public file
+		} else {
+			console.log("inside false");
+			return res.status(400).json(
+				new ApiError(400, "Invalid json format", {
+					fieldError: {
+						name: "",
+						json: "",
+					},
+				})
+			);
+		}
+
+	} catch (error: any) {
+        console.log(error)
 		return res.status(400).json(
 			new ApiError(400, "Invalid json format", {
 				fieldError: {
 					name: "",
-					json: "",
+					json: error.message,
 				},
 			})
 		);
@@ -49,16 +51,20 @@ export function storeJson(req: Request, res: Response) {
 
 function saveJson({
 	newName,
-	jsonData,
+	receivedObject,
 }: {
 	newName: string;
-	jsonData: object;
+	receivedObject: object;
 }) {
-	fs.writeFileSync(`./public/json/${newName}.json`, JSON.stringify(jsonData));
+	const filePath = path.resolve(__dirname, "../../", "public", "json", `${newName}.json`)
+	fs.writeFileSync(filePath, JSON.stringify(receivedObject, null,0));
 }
 
 function isValidObject(obj: object) {
-	return typeof obj === "object" && obj !== null;
+	const val =  typeof obj === "object" && obj !== null;
+	console.log(obj)
+	console.log("the object is ", val)
+	return val
 }
 
 function validateJson(jsonString: string): boolean {
@@ -81,7 +87,8 @@ function validateJson(jsonString: string): boolean {
  * @returns The name of the json data, gives new name if given name already exists.
  */
 function checkAndUpdate(name: string): string {
-	const fileNamesData = fs.readFileSync("src/DB/usedNames.json", "utf-8");
+	const filePath = path.resolve(__dirname, "../", "DB", "usedNames.json")
+	const fileNamesData = fs.readFileSync(filePath, "utf-8");
 	const fileNames: string[] = JSON.parse(fileNamesData);
 	let newName = name;
 
@@ -92,7 +99,7 @@ function checkAndUpdate(name: string): string {
 	}
 	fileNames.push(newName); //may as well keep name in sorted order for easier sorting
 	fs.writeFileSync(
-		"src/DB/usedNames.json",
+		filePath,
 		JSON.stringify(fileNames, null, 2)
 	);
 
@@ -100,11 +107,12 @@ function checkAndUpdate(name: string): string {
 }
 
 function generateFileURL(name: string) {
-	return env.base_url + name;
+	return (process.env.BASE_URL || "https://json.khanalsaurav.com.np/json/") + name;
 }
 
 function checkIfFileExists(name: string): boolean {
-	const fileNamesData = fs.readFileSync("src/DB/usedNames.json", "utf-8");
+	const filePath = path.join(__dirname, "../", "DB", "usedNames.json")
+	const fileNamesData = fs.readFileSync(filePath, "utf-8");
 	const fileNames: string[] = JSON.parse(fileNamesData);
 	if (fileNames.includes(name)) {
 		return true;
@@ -116,7 +124,8 @@ function checkIfFileExists(name: string): boolean {
 export function getJson(req: Request, res: Response) {
 	const { name } = req.params;
 	if (checkIfFileExists(name)) {
-		const filePath = `./public/json/${name}.json`;
+		const filePath = path.resolve(__dirname, "../../", "public", "json", `${name}.json`)
+		// const filePath = `./public/json/${name}.json`;
 		const file = fs.readFileSync(filePath, "utf-8");
 		const obj = JSON.parse(file);
 		return res.status(200).json(obj);
@@ -126,7 +135,6 @@ export function getJson(req: Request, res: Response) {
 			.json(new ApiError(404, "The requested item doesn't exist."));
 	}
 }
-
 
 //TODO:
 // Delete files when number increases

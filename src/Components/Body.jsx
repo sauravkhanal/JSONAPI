@@ -3,7 +3,7 @@ import BodyRight from "./BodyRight"
 
 function Body() {
     return (
-        <div className="grid grid-cols-3 bg-red-400 rounded-xl overflow-hidden shadow-md">
+        <div className="grid grid-cols-3 rounded-xl overflow-hidden shadow-md">
             <div className="hidden lg:block">
                 <BodyLeft />
             </div>

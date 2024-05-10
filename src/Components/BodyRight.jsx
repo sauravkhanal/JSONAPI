@@ -20,8 +20,8 @@ function BodyRight() {
         statusCode: 200,
         message: "",
         data: {
-            parsingUrl: "https://json.gorkhacloud.com/api/json/userDetails",
-            formattedJson: "{\n  \"chooseKindness\":  \"❤️\"\n}",
+            parsingUrl: "https://json.khanalsaurav.com.np/json/samplejson",
+            // formattedJson: "{\n  \"chooseKindness\":  \"❤️\"\n}",
             fieldError: {
                 name: "Message for Name filed",
                 json: "Message for Json filed",
@@ -33,7 +33,7 @@ function BodyRight() {
         console.log("inside use effect")
         switch (response.statusCode) {
             case 200:
-                toast.success(response.message.information)
+                toast.success(response.message)
                 break;
             case 400:
                 console.log('case 400');
@@ -42,7 +42,7 @@ function BodyRight() {
                 json && setError('json', { type: 'manual', message: json });
                 break;
             default:
-                toast.error(response.message.information)
+                toast.error(response.message)
         }
     }, [response])
 
@@ -50,6 +50,7 @@ function BodyRight() {
     useEffect(() => {
         if (response.data !== null)
             setUrl(response.data.parsingUrl)
+        if (response?.data?.formattedJson) setValue('json', JSON.stringify(response.data.formattedJson, null, 4))
     }, [response.data])
 
     //react hook form
@@ -90,7 +91,7 @@ function BodyRight() {
         }, 15000)
 
         try {
-            const res = await handleRequest({ ...data })
+            const res = await handleRequest(data)
             setResponse({ ...res })
             console.log("print the result")
             console.log(res)
@@ -116,7 +117,7 @@ function BodyRight() {
     const loadSample = async () => {
         setLoading(true)
         const data = await getSampleJson();
-        setValue('json', data)
+        setValue('json', JSON.stringify(data, null, 4))
         setLoading(false)
     }
 
@@ -145,7 +146,7 @@ function BodyRight() {
                     <textarea
                         rows={10}
                         name='json'
-                        placeholder={response.data?.formattedJson}
+                        placeholder={`{\n"key": "value",\n"key": "value",\n...\n}`}
                         id='json'
                         className={`rounded-md  p-2 font-normal bg-gray-50 dark:bg-blue-bg2 dark:border-none border border-solid border-slate-200 focus:bg-white dark:focus:bg-blue-bg3 dark:focus:outline-none ${errors.name && "outline outline-2 outline-red-500 outline-solid"}`}
                         formNoValidate
