@@ -103,7 +103,7 @@ function checkAndUpdate(name: string): string {
 }
 
 function generateFileURL(name: string) {
-	return env.base_url + name;
+	return process.env.BASE_URL || "https://json.khanalsaurav.com.np/json/" + name;
 }
 
 function checkIfFileExists(name: string): boolean {

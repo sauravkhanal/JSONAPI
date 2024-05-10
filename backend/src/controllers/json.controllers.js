@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getJson = exports.storeJson = void 0;
 const node_fs_1 = __importDefault(require("node:fs"));
-const env_1 = __importDefault(require("../config/env"));
 const ApiError_1 = __importDefault(require("../utils/ApiError"));
 const ApiResponse_1 = __importDefault(require("../utils/ApiResponse"));
 const node_path_1 = __importDefault(require("node:path"));
@@ -84,7 +83,7 @@ function checkAndUpdate(name) {
     return newName;
 }
 function generateFileURL(name) {
-    return env_1.default.base_url + name;
+    return process.env.BASE_URL || "https://json.khanalsaurav.com.np/json/" + name;
 }
 function checkIfFileExists(name) {
     const filePath = node_path_1.default.join(__dirname, "../", "DB", "usedNames.json");
