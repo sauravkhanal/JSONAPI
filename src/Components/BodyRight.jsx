@@ -20,7 +20,7 @@ function BodyRight() {
         statusCode: null,
         message: "",
         data: {
-            parsingUrl: "https://json.khanalsaurav.com.np/json/samplejson",
+            parsingUrl: "https://json.khanalsaurav.com.np/json/sample",
             // formattedJson: "{\n  \"chooseKindness\":  \"❤️\"\n}",
             fieldError: {
                 name: "Message for Name filed",
