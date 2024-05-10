@@ -17,7 +17,7 @@ function BodyRight() {
     const [loading, setLoading] = useState(false);
     const [Url, setUrl] = useState('');
     const [response, setResponse] = useState({
-        statusCode: 200,
+        statusCode: null,
         message: "",
         data: {
             parsingUrl: "https://json.khanalsaurav.com.np/json/samplejson",
@@ -41,8 +41,8 @@ function BodyRight() {
                 name && setError('name', { type: 'manual', message: name });
                 json && setError('json', { type: 'manual', message: json });
                 break;
-            default:
-                toast.error(response.message)
+            // default:
+                // toast.error(response.message)
         }
     }, [response])
 
